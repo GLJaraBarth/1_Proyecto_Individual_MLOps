@@ -32,7 +32,7 @@ def genero(Anio:str):
     top_generos = []
     df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
 
-    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='id')
+    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='genres')
 
     # Agrupar por la columna 'Nombre'
     grupos_genres = df_filtrado_anio_unique.groupby('genres')
@@ -56,7 +56,7 @@ def juegos(Anio:str):
     lista_juegos = []
     df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
 
-    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='id')
+    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
 
     lista_juegos = list(df_filtrado_anio_unique['app_name'])
 
@@ -70,7 +70,7 @@ def specs(Anio:str):
     top_specs = []
     df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
 
-    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='id')
+    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='specs')
 
     # Agrupar por la columna 'Nombre'
     grupos_specs = df_filtrado_anio_unique.groupby('specs')
@@ -85,4 +85,4 @@ def specs(Anio:str):
 
     top_specs = lista_specs[:5]
 
-    return {'Anio': Anio, 'Generos': top_specs}
+    return {'Anio': Anio, 'Specs': top_specs}
