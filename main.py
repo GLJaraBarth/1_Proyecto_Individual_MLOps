@@ -94,7 +94,7 @@ def earlyacces(Anio:str):
         #Ingresa un año y devuelve la cantidad de juegos lanzados en un año con early access.
     Anio = int(Anio)
     lista_juegos = []
-    df_filtrado_anio = df5[df5['release_year'] == Anio]
+    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
 
     df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
 
