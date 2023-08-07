@@ -11,20 +11,11 @@ app = FastAPI(title='PROYECTO INDIVIDUAL Nº1 -Machine Learning Operations (MLOp
 
 #http://127.0.0.1:8000
 
+
 # Datasets
 # Cargar el archivo Parquet en un DataFrame
 df_salida = pd.read_parquet('steam_games.parquet')
 
-
-# Función para reconocer el servidor local
-
-@app.get('/')
-async def index():
-    return {'Hola! Bienvenido a la API de recomedación. Por favor dirigite a /docs'}
-
-@app.get('/about/')
-async def about():
-    return {'PROYECTO INDIVIDUAL Nº1 -Machine Learning Operations (MLOps)'}
 
 @app.get('/genero/({Año})')
 def genero(Anio:str): 
@@ -32,7 +23,10 @@ def genero(Anio:str):
     Anio = int(Anio)
     lista_generos = []
     top_generos = []
-    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
+    try:
+        df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]     #Tratamiento de la excepción
+    except (ValueError, KeyError, TypeError):
+        return None
 
     df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset=['genres','app_name'])
 
@@ -56,7 +50,10 @@ def juegos(Anio:str):
     #Se ingresa un año y devuelve una lista con los juegos lanzados en el año.
     Anio = int(Anio)
     lista_juegos = []
-    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
+    try:
+        df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]     #Tratamiento de la excepción
+    except (ValueError, KeyError, TypeError):
+        return None
 
     df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
 
@@ -70,7 +67,10 @@ def specs(Anio:str):
     Anio = int(Anio)
     lista_specs = []
     top_specs = []
-    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
+    try:
+        df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]     #Tratamiento de la excepción
+    except (ValueError, KeyError, TypeError):
+        return None
 
     df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset=['specs','app_name'])
 
@@ -94,7 +94,10 @@ def earlyacces(Anio:str):
         #Ingresa un año y devuelve la cantidad de juegos lanzados en un año con early access.
     Anio = int(Anio)
     lista_juegos = []
-    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
+    try:
+        df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]     #Tratamiento de la excepción
+    except (ValueError, KeyError, TypeError):
+        return None
 
     df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
 
@@ -111,7 +114,10 @@ def sentiment(Anio:str):
     #Según el año de lanzamiento, se devuelve una lista con la cantidad de registros que se encuentren categorizados con un análisis de sentimiento.
     Anio = int(Anio)
     
-    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
+    try:
+        df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]     #Tratamiento de la excepción
+    except (ValueError, KeyError, TypeError):
+        return None
 
     df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
 
@@ -127,7 +133,10 @@ def metascore(Anio:str):
     #Top 5 juegos según año con mayor metascore.
     Anio = int(Anio)
     
-    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
+    try:
+        df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]     #Tratamiento de la excepción
+    except (ValueError, KeyError, TypeError):
+        return None
 
     df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
 
@@ -143,7 +152,7 @@ def metascore(Anio:str):
 
 
 @app.get('/predic/({Genero}{Earlyaccess})')
-def prediccion(genero, early_access):
+def prediccion(genero:str, early_access:bool):
     act = 0
     adv = 0
     cas = 0
