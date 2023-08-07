@@ -175,5 +175,5 @@ def prediccion(genero, early_access):
         pickle_model = pickle.load(file)
     Ypredict = pickle_model.predict(X_Datos)
     predic = round(Ypredict.tolist(),2)
-    rsme = 7.25
+    rsme = str(7.25)
     return {'Precio': predic, 'RSME': rsme}
