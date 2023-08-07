@@ -26,7 +26,7 @@ async def index():
 async def about():
     return {'PROYECTO INDIVIDUAL Nº1 -Machine Learning Operations (MLOps)'}
 
-@app.get('/genero/({Anio})')
+@app.get('/genero/({Año})')
 def genero(Anio:str): 
     #Se ingresa un año y devuelve una lista con los 5 géneros más vendidos en el orden correspondiente.
     Anio = int(Anio)
@@ -49,9 +49,9 @@ def genero(Anio:str):
 
     top_generos = lista_generos[:5]
 
-    return {'Anio': Anio, 'Generos': top_generos}
+    return {'Año': Anio, 'Generos': top_generos}
 
-@app.get('/juegos/({Anio})')
+@app.get('/juegos/({Año})')
 def juegos(Anio:str): 
     #Se ingresa un año y devuelve una lista con los juegos lanzados en el año.
     Anio = int(Anio)
@@ -62,9 +62,9 @@ def juegos(Anio:str):
 
     lista_juegos = list(df_filtrado_anio_unique['app_name'])
 
-    return {'Anio': Anio, 'Juegos': lista_juegos}
+    return {'Año': Anio, 'Juegos': lista_juegos}
 
-@app.get('/sepcs/({Anio})')
+@app.get('/sepcs/({Año})')
 def specs(Anio:str): 
     #Se ingresa un año y devuelve una lista con los 5 géneros más vendidos en el orden correspondiente.
     Anio = int(Anio)
@@ -87,9 +87,9 @@ def specs(Anio:str):
 
     top_specs = lista_specs[:5]
 
-    return {'Anio': Anio, 'Specs': top_specs}
+    return {'Año': Anio, 'Specs': top_specs}
 
-@app.get('/earlyacces/({Anio})')
+@app.get('/earlyacces/({Año})')
 def earlyacces(Anio:str):        
         #Ingresa un año y devuelve la cantidad de juegos lanzados en un año con early access.
     Anio = int(Anio)
@@ -104,10 +104,26 @@ def earlyacces(Anio:str):
 
     cantidad = len(lista_juegos)                 
 
-    return {'Anio': Anio, 'Cantidad de Juegos con early access': cantidad}
+    return {'Año': Anio, 'Cantidad de Juegos con early access': cantidad}
+
+@app.get('/sentiment/({Año})')
+def sentiment(Anio:str): 
+    #Según el año de lanzamiento, se devuelve una lista con la cantidad de registros que se encuentren categorizados con un análisis de sentimiento.
+    Anio = int(Anio)
+    
+    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
+
+    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
+
+    # Contar la cantidad de veces que se repite cada nombre en la columna 'nombre'
+    conteo = df_filtrado_anio_unique['sentiment'].value_counts()
+
+    diccionario = conteo.to_dict()
+
+    return {'Año': Anio, 'Cantidad de registros categorizados': diccionario}
 
 
-@app.get('/predic/({Genero}{early_access})')
+@app.get('/predic/({Genero}{Earlyaccess})')
 def prediccion(genero, early_access):
     act = 0
     adv = 0
