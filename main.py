@@ -89,8 +89,26 @@ def specs(Anio:str):
 
     return {'Anio': Anio, 'Specs': top_specs}
 
+@app.get('/earlyacces/({Anio})')
+def earlyacces(Anio:str):        
+        #Ingresa un año y devuelve la cantidad de juegos lanzados en un año con early access.
+    Anio = int(Anio)
+    lista_juegos = []
+    df_filtrado_anio = df5[df5['release_year'] == Anio]
+
+    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
+
+    condicion = df_filtrado_anio_unique['early_access'] == True
+
+    lista_juegos = list(df_filtrado_anio_unique.loc[condicion,'app_name'])
+
+    cantidad = len(lista_juegos)                 
+
+    return {'Anio': Anio, 'Cantidad de Juegos con early access': cantidad}
+
+
 @app.get('/predic/({Genero}{early_access})')
-def predic(genero, early_access):
+def prediccion(genero, early_access):
     act = 0
     adv = 0
     cas = 0
@@ -121,5 +139,5 @@ def predic(genero, early_access):
     with open('pickle_model.pkl', 'rb') as file:
         pickle_model = pickle.load(file)
     Ypredict = pickle_model.predict(X_Datos)
-    predic = str(Ypredict.tolist())
+    predic = Ypredict.tolist()
     return {'Precio': predic}
