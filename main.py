@@ -122,6 +122,25 @@ def sentiment(Anio:str):
 
     return {'Año': Anio, 'Cantidad de registros categorizados': diccionario}
 
+@app.get('/metascore/({Año})')
+def metascore(Anio:str): 
+    #Top 5 juegos según año con mayor metascore.
+    Anio = int(Anio)
+    
+    df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
+
+    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='app_name')
+
+    df_filtrado_anio_unique.dropna(subset=['metascore'], inplace=True)
+
+    df_ordenado = df_filtrado_anio_unique.sort_values(by='metascore', ascending=False)
+
+    lista_app_name = df_ordenado['app_name'].to_list()
+
+    top_app_name = lista_app_name[:5]
+
+    return {'Anio': Anio, 'Top 5 de juegos con mayor metascore': top_app_name}
+
 
 @app.get('/predic/({Genero}{Earlyaccess})')
 def prediccion(genero, early_access):
