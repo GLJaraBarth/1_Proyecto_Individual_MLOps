@@ -3,7 +3,6 @@ from fastapi import FastAPI
 import pandas as pd 
 import numpy as np
 import pickle
-import json
 
 #Instanciamos la clase, indicamos título y descripción de la API
 app = FastAPI(title='PROYECTO INDIVIDUAL Nº1 -Machine Learning Operations (MLOps) -Guillermo Jara',
