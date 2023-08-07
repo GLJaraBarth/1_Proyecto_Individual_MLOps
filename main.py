@@ -2,6 +2,8 @@
 from fastapi import FastAPI
 import pandas as pd 
 import numpy as np
+import pickle
+import json
 
 #Instanciamos la clase, indicamos título y descripción de la API
 app = FastAPI(title='PROYECTO INDIVIDUAL Nº1 -Machine Learning Operations (MLOps) -Guillermo Jara',
@@ -32,7 +34,7 @@ def genero(Anio:str):
     top_generos = []
     df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
 
-    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='genres')
+    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset=['genres','app_name'])
 
     # Agrupar por la columna 'Nombre'
     grupos_genres = df_filtrado_anio_unique.groupby('genres')
@@ -70,7 +72,7 @@ def specs(Anio:str):
     top_specs = []
     df_filtrado_anio = df_salida[df_salida['release_year'] == Anio]
 
-    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset='specs')
+    df_filtrado_anio_unique = df_filtrado_anio.drop_duplicates(subset=['specs','app_name'])
 
     # Agrupar por la columna 'Nombre'
     grupos_specs = df_filtrado_anio_unique.groupby('specs')
@@ -86,3 +88,38 @@ def specs(Anio:str):
     top_specs = lista_specs[:5]
 
     return {'Anio': Anio, 'Specs': top_specs}
+
+@app.get('/predic/({Genero}{early_access})')
+def predic(genero, early_access):
+    act = 0
+    adv = 0
+    cas = 0
+    ind = 0
+    rpg = 0
+    sim = 0
+    sty = 0
+    ea = early_access
+    if genero == 'Action':
+        act = 1
+    elif genero == 'Adventure':
+        adv = 1
+    elif genero == 'Casual':
+        cas =1
+    elif genero == 'Indie':
+        ind = 1
+    elif genero == 'RPG':
+        rgp = 1
+    elif genero == 'Simulation':
+        sim = 1
+    elif genero == 'Strategy':
+        sty = 1
+    dic = {'early_access':[int(ea)], 'genres_Action':[act],
+       'genres_Adventure':[adv], 'genres_Casual':[int(cas)], 'genres_Indie':[int(ind)], 'genres_RPG':[int(rpg)],
+       'genres_Simulation':[int(sim)], 'genres_Strategy':[int(sty)]}
+    df_datos = pd.DataFrame(dic)
+    X_Datos = df_datos.values
+    with open('pickle_model.pkl', 'rb') as file:
+        pickle_model = pickle.load(file)
+    Ypredict = pickle_model.predict(X_Datos)
+    predic = Ypredict.tolist()
+    return {'Precio': predic}
