@@ -85,7 +85,7 @@ El análisis exploratorio de datos **`EDA`** para el modelo de **`Machine Learni
 
 - Tratamiento de Outliers (Para asumir valores atípicos, se usa la Regla de las Tres Sigmas).
 
-- Análisis de variables (Mediante Histogrmas, Boxplots y Scatterplots).
+- Análisis de variables (Mediante Histogramas, Boxplots y Scatterplots).
 
 - Matrices de correlación.
 
@@ -114,4 +114,4 @@ Los datos están listos para ser consumidos y consultados a partir del siguiente
 
 ## Video 
 
-En el [enlace]() se puede acceder a video expicativo del proyecto.
+En el [enlace](https://youtu.be/DUCHEEekHiw) se puede acceder a video expicativo del proyecto.
