@@ -152,7 +152,7 @@ def metascore(Anio:str):
 
 
 @app.get('/predic/({Genero}{Earlyaccess})')
-def prediccion(genero:str, early_access:bool):
+def predic(genero:str, early_access:bool):
     act = 0
     adv = 0
     cas = 0
@@ -161,6 +161,7 @@ def prediccion(genero:str, early_access:bool):
     sim = 0
     sty = 0
     ea = early_access
+    predic = []
     if genero == 'Action':
         act = 1
     elif genero == 'Adventure':
@@ -175,14 +176,16 @@ def prediccion(genero:str, early_access:bool):
         sim = 1
     elif genero == 'Strategy':
         sty = 1
+    else:
+        return ('El valor de genero ingresado no es valido')
     dic = {'early_access':[int(ea)], 'genres_Action':[act],
        'genres_Adventure':[adv], 'genres_Casual':[int(cas)], 'genres_Indie':[int(ind)], 'genres_RPG':[int(rpg)],
        'genres_Simulation':[int(sim)], 'genres_Strategy':[int(sty)]}
     df_datos = pd.DataFrame(dic)
     X_Datos = df_datos.values
-    with open('pickle_model.pkl', 'rb') as file:
+    with open('modelo_entrenado.pkl', 'rb') as file:
         pickle_model = pickle.load(file)
     Ypredict = pickle_model.predict(X_Datos)
-    predic = Ypredict.tolist()
+    predic.extend(Ypredict)
     rsme = 7.25
-    return {'Precio': predic, 'RSME': rsme}
+    return {'Precio': predic[0], 'RSME': rsme}
