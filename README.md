@@ -43,21 +43,31 @@ El detalle y código en:
 
 Se disponibilizaron los siguientes endpoints a través del Framework **`FastAPI`**:
 
-- def genero( Año: str ): Se ingresa un año y devuelve una lista con los 5 géneros más vendidos en el orden correspondiente. p.e. genero '2010' en string y retorna {'Anio': 2010,'Generos': ['Action', 'Indie', 'Strategy', 'Adventure', 'Casual']}
+- def genero( Año: str ): Se ingresa un año y devuelve una lista con los 5 géneros más vendidos en el orden correspondiente. 
+  
+  p.e. genero '2010' en string y retorna {'Anio': 2010,'Generos': ['Action', 'Indie', 'Strategy', 'Adventure', 'Casual']}
 
-- def juegos( Año: str ): Se ingresa un año y devuelve una lista con los juegos lanzados en el año. p.e. juegos '2019' en sring y retorna {'Anio': 2019,'Juegos': ['Raji: An Ancient Epic',"K'NOSSOS",'The Legendary Player - Make Your Reputation - OPEN BETA','The End of an Age: Fading Remnants']}
+- def juegos( Año: str ): Se ingresa un año y devuelve una lista con los juegos lanzados en el año. 
+ 
+  p.e. juegos '2019' en sring y retorna {'Anio': 2019,'Juegos': ['Raji: An Ancient Epic',"K'NOSSOS",'The Legendary Player - Make Your Reputation - OPEN BETA','The End of an Age: Fading Remnants']}
 
-- def specs( Año: str ): Se ingresa un año y devuelve una lista con los 5 specs que más se repiten en el mismo en el orden correspondiente. p.e. specs '2018' en string y retorna {'Anio': 2018,'Specs': ['Single-player','Steam Achievements','Full controller support','Steam Cloud','Partial Controller Support']}
+- def specs( Año: str ): Se ingresa un año y devuelve una lista con los 5 specs que más se repiten en el mismo en el orden correspondiente. 
+  
+  p.e. specs '2018' en string y retorna {'Anio': 2018,'Specs': ['Single-player','Steam Achievements','Full controller support','Steam Cloud','Partial Controller Support']}
 
-- def earlyacces( Año: str ): Cantidad de juegos lanzados en un año con early access. p.e. earlyacces '2013' en string y retorna {'Anio': 2013, 'Cantidad de Juegos con early access': 10}
+- def earlyacces( Año: str ): Cantidad de juegos lanzados en un año con early access. 
+  
+  p.e. earlyacces '2013' en string y retorna {'Anio': 2013, 'Cantidad de Juegos con early access': 10}
 
-- def sentiment( Año: str ): Según el año de lanzamiento, se devuelve una lista con la cantidad de registros que se encuentren categorizados con un análisis de sentimiento.
+- def sentiment( Año: str ): Según el año de lanzamiento, se devuelve una lista con la cantidad de registros que se encuentren categorizados con   un análisis de sentimiento.
 
                     Ejemplo de retorno: {Mixed = 182, Very Positive = 120, Positive = 278}
 
     p.e. sentiment '2018' en string y retorna {'Anio': 2018,'Cantidad de registros categorizados': {'Sin Datos': 146,'Mixed': 6,'Mostly Positive': 3,'Very Positive': 3,'Mostly Negative': 1}}
 
-- def metascore( Año: str ): Top 5 juegos según año con mayor metascore. p.e.metascore '2015' en string y retorna {'Anio': 2015,'Top 5 de juegos   con mayor metascore': ['Grand Theft Auto V','Divinity: Original Sin - Enhanced Edition','Undertale','METAL GEAR SOLID V: THE PHANTOM PAIN','Pillars of Eternity']}
+- def metascore( Año: str ): Top 5 juegos según año con mayor metascore. 
+  
+  p.e.metascore '2015' en string y retorna {'Anio': 2015,'Top 5 de juegos   con mayor metascore': ['Grand Theft Auto V','Divinity: Original Sin - Enhanced Edition','Undertale','METAL GEAR SOLID V: THE PHANTOM PAIN','Pillars of Eternity']}
 
 El código para correr la API dentro de FastAPI se puede visualizar [aquí](https://github.com/GLJaraBarth/1_Proyecto_Individual_MLOps/blob/main/main.py) 
 
@@ -90,6 +100,8 @@ Para el modelo de predicción en **`Machine Learning`** se utilizó como criteri
 Se trata de un modelo de Aprendizaje Supervisado el cual se trabajó con la librería **`Scikit-Learn`** con un algoritmo de regresión lineal múltiple.
 El set de datos se dividió en 80% para entrenamiento y 20% para testeo. Para la evaluación del modelo se utilizó en RSME.
 
+- def predicción( genero, earlyaccess = True/False): Ingresando estos parámetros, deberíamos recibir el precio y RMSE. p.e. genero 'Action', earlyaccess = True retorna {'Precio': 10.95969009399414, 'RSME': 7.25}
+
 El detalle y código en:
 [archivo](https://github.com/GLJaraBarth/1_Proyecto_Individual_MLOps/blob/main/modelo_ML.ipynb)
 
@@ -102,4 +114,4 @@ Los datos están listos para ser consumidos y consultados a partir del siguiente
 
 ## Video 
 
-En el [enlace]() se puede acceder a video expicativo del proyecto
+En el [enlace]() se puede acceder a video expicativo del proyecto.
